@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const Email = require('./../utils/Email');
 const jwt = require('jsonwebtoken');
 const User = require('./../model/userModel');
+const { create } = require('domain');
 
 const signToken = id =>{
   return jwt.sign({id},process.env.JWT_SECRET_KEY,{
@@ -140,4 +141,21 @@ exports.resetPassword = catchAsync(async (req,res,next) =>{
      await user.save();
 
      createSendToken(res,user,200)
+});
+
+exports.updatePassword = catchAsync(async (req,res,next) =>{
+    const user = await User.findById(req.user.id).select('+password');
+
+    //Check if current password matches password in db
+    if(!(await user.comparePassword(req.body.passwordCurrent,user.password))){
+       return next(new AppError('Your current password is wrong',401))
+    }
+
+    //if so update
+    user.password = req.body.password;
+    user.passwordConfirm = req.body.passwordConfirm;
+    await user.save();
+
+    //Log User in and send JWT
+    createSendToken(res,user,200)
 });
