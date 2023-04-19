@@ -17,7 +17,10 @@ router.patch('/updateMyPassword',authController.updatePassword);
 
 router.route('/me')
 .get(userController.getMe,userController.getUser)
-.patch(userController.updateMe)
+.patch(userController.uploadUserPhoto,
+       userController.resizeUserPhoto,
+       userController.updateMe
+)
 .delete(userController.deleteMe);
 
 //Admin routes
