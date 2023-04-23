@@ -12,7 +12,11 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [true, 'A product must hae a cover image']
    },
-   images: String,
+   images: [String],
+   vendor: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User'
+   },
    description: {
     type: String,
     required: [true, 'A product must have a description']
@@ -20,6 +24,10 @@ const productSchema = new mongoose.Schema({
    price:{
     type: Number,
     required: [true, 'A product must have a price']
+   },
+   category: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Category'
    },
    priceDiscount: {
     type: Number,
@@ -34,6 +42,8 @@ const productSchema = new mongoose.Schema({
     type: Number,
     default: 0
    },
+   Colors: String,
+   sizes: String,
    sold: {
      type: Number,
      default: 0
@@ -53,6 +63,22 @@ const productSchema = new mongoose.Schema({
     type: Number,
     default: 0
    }
+});
+
+productSchema.pre(/^find/, function(next){
+  this.populate({
+    path: 'vendor',
+   select: 'firstName lastName email' 
+  });
+  next();
+});
+
+productSchema.pre(/^find/, function(next){
+  this.populate({
+    path: 'category',
+   select: 'name' 
+  });
+  next();
 });
 
 module.exports = mongoose.model('Product',productSchema)
