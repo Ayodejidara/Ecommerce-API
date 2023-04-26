@@ -8,7 +8,7 @@ exports.createCategory =  catchAsync(async (req,res,next) =>{
     res.status(201).json({
         status: 'success',
         data: {
-            product: newCategory
+            category: newCategory
         }
     });
 });

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const slugify = require('slugify');
 
 const productSchema = new mongoose.Schema({
-   productName: {
+   name: {
     type: String,
     required: [true, 'Product must have a name'],
     trim: true
@@ -63,20 +63,26 @@ const productSchema = new mongoose.Schema({
     type: Number,
     default: 0
    }
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+});
+
+
+// Virtual populate
+productSchema.virtual('reviews', {
+   ref: 'Review',
+   foreignField: 'product',
+   localField: '_id'
 });
 
 productSchema.pre(/^find/, function(next){
   this.populate({
     path: 'vendor',
    select: 'firstName lastName email' 
-  });
-  next();
-});
-
-productSchema.pre(/^find/, function(next){
-  this.populate({
+  }).populate({
     path: 'category',
-   select: 'name' 
+    select: 'name'
   });
   next();
 });
