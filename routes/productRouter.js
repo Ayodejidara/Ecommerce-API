@@ -3,18 +3,36 @@ const router = express.Router();
 
 const authController = require('./../controller/authController');
 const productController = require('./../controller/productController');
+const reviewRouter = require('./../routes/reviewRouter');
+
+router.use('/:productId/reviews', reviewRouter);
 
 router.route('/')
 .get(productController.getAllProducts)
-.post(authController.protect,authController.restrictTo('admin','vendor'),productController.createProduct);
+.post(
+    authController.protect,
+    authController.restrictTo('admin','vendor'),
+    productController.createProduct
+    );
 
 router.route('/:id')
 .get(productController.getProduct)
-.patch(authController.protect,
+.patch(
+    authController.protect,
     authController.restrictTo('admin','vendor'),
-    productController.updateProduct)
-.delete(authController.protect,
+    productController.updateProduct
+    )
+.delete(
+    authController.protect,
     authController.restrictTo('admin','vendor'),
-    productController.deleteProduct);
+    productController.deleteProduct
+    );
+
+// router.route('/:productId/reviews')
+// .post(
+//     authController.protect, 
+//     authController.restrictTo('customer'), 
+//     reviewController.createReview
+//     );
 
 module.exports = router;
