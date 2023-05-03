@@ -3,6 +3,7 @@ const sharp = require('sharp');
 
 const AppError = require('./../utils/AppError');
 const catchAsync = require('./../utils/catchAsync');
+const factory = require('./handlerFactory');
 const User = require('./../model/userModel');
 
 const multerStorage = multer.memoryStorage();
@@ -44,63 +45,19 @@ const filterObj = (obj, ...allowedFields) =>{
     return newObj;
 };
 
-exports.getAllUsers = catchAsync(async (req,res,next) =>{
-   const user = await User.find();
-   res.status(200).json({
-    status: 'success',
-    results: user.length,
-    data: {
-       user
-    }
-   })
-});
-
+exports.getAllUsers = factory.getAll(User)
 exports.getMe = catchAsync(async (req,res,next) =>{
    req.params.id = req.user.id;
    next();
 });
-
-exports.getUser = catchAsync(async (req,res,next) =>{
-   const user = await User.findById(req.params.id);
-   if(!user) return next(new AppError('No user found with ID',404));
-   res.status(200).json({
-      status: 'success',
-      data: {
-         user
-      }
-   })
-});
-
-exports.updateUser = catchAsync(async (req,res,next) =>{
-   const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true
-   });
-
-   if(!user) return next(new AppError('No user found with ID',404));
-
-   res.status(200).json({
-      status: 'success',
-      data: {
-         user
-      }
-   })
-});
-
-exports.deleteUser = catchAsync(async (req,res,next) =>{
-   const user = await User.findByIdAndDelete(req.params.id);
-   if(!user) return next(new AppError('No user found with ID',404));
-
-   res.status(204).json({
-      status: 'success',
-      data: null
-   });  
-});
+exports.getUser = factory.getOne(User);
+exports.updateUser = factory.updateOne(User);
+exports.deleteUser = factory.deleteOne(User);
 
 exports.updateMe = catchAsync(async (req,res,next) =>{
    //Create error if user tries to update password
    if(req.body.password || req.body.passwordConfirm) {
-   return next(new AppError('This route is not for password updates. Please use /updateMyPaassword!',400));
+   return next(new AppError('This route is not for password updates. Please use /updateMyPassword!',400));
    };
 
    //Filter Out unwanted field names that should not be updated
