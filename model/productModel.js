@@ -42,8 +42,14 @@ const productSchema = new mongoose.Schema({
     type: Number,
     default: 0
    },
-   Colors: String,
-   sizes: String,
+   colors: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Color'
+   },
+   sizes: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Size'
+   },
    sold: {
      type: Number,
      default: 0
@@ -83,6 +89,12 @@ productSchema.pre(/^find/, function(next){
   }).populate({
     path: 'category',
     select: 'name'
+  }).populate({
+    path: 'colors',
+    select: 'colors'
+  }).populate({
+    path: 'sizes',
+    select: 'sizes'
   });
   next();
 });
