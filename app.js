@@ -6,6 +6,7 @@ app.use(express.json());
 
 const categoryRouter = require('./routes/categoryRouter');
 const colorRouter = require('./routes/colorRouter');
+const favoriteRouter = require('./routes/favoriteRouter');
 const productRouter = require('./routes/productRouter');
 const reviewRouter = require('./routes/reviewRouter');
 const sizeRouter = require('./routes/sizeRouter');
@@ -20,6 +21,7 @@ app.use('/api/v1/product', productRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/color', colorRouter);
 app.use('/api/v1/size', sizeRouter);
+app.use('/api/v1/favorite', favoriteRouter);
 
 app.all('*',(req,res,next) =>{
     res.status(404).send('Route not defined');
