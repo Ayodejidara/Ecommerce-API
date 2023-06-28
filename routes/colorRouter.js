@@ -4,9 +4,12 @@ const router = express.Router({ mergeParams: true });
 const authController = require('./../controller/authController');
 const colorController = require('./../controller/colorController');
 
+router.use(authController.protect)
 
 router.route('/')
-.post(authController.protect,
-      colorController.addProductColor);
+.post(colorController.addProductColor);
+
+router.route('/:id')
+.patch(colorController.updateProductColor);
 
 module.exports = router;
