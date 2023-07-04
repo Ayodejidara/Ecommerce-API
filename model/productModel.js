@@ -91,10 +91,10 @@ productSchema.pre(/^find/, function(next){
     select: 'name'
   }).populate({
     path: 'colors',
-    select: 'colors'
+    select: 'color'
   }).populate({
     path: 'sizes',
-    select: 'sizes'
+    select: 'size'
   });
   next();
 });
