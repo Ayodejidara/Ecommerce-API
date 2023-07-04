@@ -95,12 +95,12 @@ exports.addProductDetails = Model => catchAsync(async(req,res,next) =>{
     const newDoc= await Model.create(req.body);
      
     if (req.body.colors) {
-        product.colors = newDoc.id;
+        product.colors.push(newDoc.id);
         await product.save();
     };
 
     if (req.body.sizes) {
-        product.sizes = newDoc.id;
+        product.sizes.push(newDoc.id);
         await product.save();
     };
     

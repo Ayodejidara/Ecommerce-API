@@ -6,7 +6,7 @@ const colorSchema = new mongoose.Schema({
         ref: 'Product',
         required: true
     },
-    colors: [String]
+    colors: String
 });
 
 module.exports = mongoose.model('Color', colorSchema);

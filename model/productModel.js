@@ -42,14 +42,14 @@ const productSchema = new mongoose.Schema({
     type: Number,
     default: 0
    },
-   colors: {
+   colors: [{
       type: mongoose.Schema.ObjectId,
       ref: 'Color'
-   },
-   sizes: {
+   }],
+   sizes: [{
       type: mongoose.Schema.ObjectId,
       ref: 'Size'
-   },
+   }],
    sold: {
      type: Number,
      default: 0

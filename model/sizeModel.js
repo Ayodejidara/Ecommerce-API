@@ -6,7 +6,7 @@ const sizeSchema = new mongoose.Schema({
         ref: 'Product',
         required: true
     },
-    sizes: [String]
+    sizes: String
 });
 
 module.exports = mongoose.model('Size', sizeSchema);
