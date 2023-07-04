@@ -10,6 +10,7 @@ router.route('/')
 .post(sizeController.addProductSize);
 
 router.route('/:id')
-.patch(sizeController.updateProductSize);
+.patch(sizeController.updateProductSize)
+.delete(sizeController.deleteProductSize);
 
 module.exports = router;

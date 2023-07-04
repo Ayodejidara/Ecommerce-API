@@ -10,6 +10,7 @@ router.route('/')
 .post(colorController.addProductColor);
 
 router.route('/:id')
-.patch(colorController.updateProductColor);
+.patch(colorController.updateProductColor)
+.delete(colorController.deleteColor);
 
 module.exports = router;
