@@ -4,7 +4,6 @@ const crypto = require('crypto');
 const Email = require('./../utils/Email');
 const jwt = require('jsonwebtoken');
 const User = require('./../model/userModel');
-const { create } = require('domain');
 
 const signToken = id =>{
   return jwt.sign({id},process.env.JWT_SECRET_KEY,{

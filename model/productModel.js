@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const slugify = require('slugify');
 
 const productSchema = new mongoose.Schema({
    name: {
@@ -42,14 +41,8 @@ const productSchema = new mongoose.Schema({
     type: Number,
     default: 0
    },
-   colors: [{
-      type: mongoose.Schema.ObjectId,
-      ref: 'Color'
-   }],
-   sizes: [{
-      type: mongoose.Schema.ObjectId,
-      ref: 'Size'
-   }],
+   color: [String],
+   size: [String],
    sold: {
      type: Number,
      default: 0
@@ -89,12 +82,6 @@ productSchema.pre(/^find/, function(next){
   }).populate({
     path: 'category',
     select: 'name'
-  }).populate({
-    path: 'colors',
-    select: 'color'
-  }).populate({
-    path: 'sizes',
-    select: 'size'
   });
   next();
 });

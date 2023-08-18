@@ -2,14 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const authController = require('./../controller/authController');
-const colorRouter = require('./colorRouter');
-const sizeRouter = require('./sizeRouter');
 const productController = require('./../controller/productController');
 const reviewRouter = require('./../routes/reviewRouter');
 
 router.use('/:productId/reviews', reviewRouter);
-router.use('/:productId/color', colorRouter);
-router.use('/:productId/size', sizeRouter);
 
 router.route('/')
 .get(productController.getAllProducts)
@@ -32,4 +28,4 @@ router.route('/:id')
     productController.deleteProduct
     );
 
-module.exports = router;
+module.exports = router; 

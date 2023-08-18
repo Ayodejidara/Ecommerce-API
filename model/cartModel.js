@@ -15,18 +15,14 @@ const cartSchema = new mongoose.Schema({
         {
             product: {
                 type: mongoose.Types.ObjectId,
-                ref: 'product',
+                ref: 'Product',
                 required: true
             },
             selectedColor: {
-                type: mongoose.Types.ObjectId,
-                ref: 'color',
-                required: true
+                type: 'String'
             },
             selectedSize: {
-                type: mongoose.Types.ObjectId,
-                ref: 'size',
-                required: true
+                type: 'String'
             },
             totalProductQuantity: {
                 type: Number,
@@ -50,34 +46,5 @@ const cartSchema = new mongoose.Schema({
     toJSON: { virtuals: true },
     toObject: { virtuals: true }
   });
-
-cartSchema.pre('save', function(next) {
-    this.populate([
-        {
-            path: 'items.selectedColor',
-            select: 'color'
-        }, 
-        {
-            path: this.items.selectedSize,
-            select:'size'
-        }
-    ]);
-    next();
-});
-
-cartSchema.pre(/^find/, function(next) {
-    this.populate([
-        {
-            path: 'items.selectedColor',
-            select: 'color'
-        },
-        {
-            path: 'items.selectedSize',
-            select: 'size'
-        }
-    ]);
-    next();
-})
-
 
 module.exports = mongoose.model('Cart', cartSchema);
