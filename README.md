@@ -10,8 +10,20 @@
 <h2>Key Features</h2>
 <ul>
   <li> Authentication </li>
+  <ul>
+    <li> SignUp[Public route] </li>
+    <li> Login[Public route] </li>
+  </ul>
+  <li>Password Management</li>
+  <ul>
+    <li>Forgot Password[Public route] </li>
+    <li> Reset Password[User route] </li>
+    <li> Update Password[User route] </li>
+  </ul>
   <li> User Management </li>
-  <li> Password Management </li>
+  <ul>
+    <li>Get All Users [</li>
+  </ul>
   <li> Email service</li>
   <li> Product service </li>
   <li> Category service</li>
